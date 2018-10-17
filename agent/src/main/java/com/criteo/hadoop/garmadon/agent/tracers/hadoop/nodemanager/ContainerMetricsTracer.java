@@ -70,17 +70,17 @@ public class ContainerMetricsTracer {
 
 
         @Override
-        protected ElementMatcher<? super TypeDescription> typeMatcher() {
+        public ElementMatcher<? super TypeDescription> typeMatcher() {
             return nameStartsWith("org.apache.hadoop.yarn.server.nodemanager.containermanager.monitor.ContainerMetrics");
         }
 
         @Override
-        protected ElementMatcher<? super MethodDescription> methodMatcher() {
+        public ElementMatcher<? super MethodDescription> methodMatcher() {
             return named("recordCpuUsage").and(takesArguments(int.class, int.class));
         }
 
         @Override
-        protected Implementation newImplementation() {
+        public Implementation newImplementation() {
             return to(VcoreUsageTracer.class).andThen(SuperMethodCall.INSTANCE);
         }
 

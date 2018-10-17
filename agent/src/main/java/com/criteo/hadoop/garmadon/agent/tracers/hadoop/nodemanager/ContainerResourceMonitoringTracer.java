@@ -43,17 +43,17 @@ public class ContainerResourceMonitoringTracer {
     public static class MemorySizeTracer extends MethodTracer {
 
         @Override
-        protected ElementMatcher<? super TypeDescription> typeMatcher() {
+        public ElementMatcher<? super TypeDescription> typeMatcher() {
             return nameStartsWith("org.apache.hadoop.yarn.server.nodemanager.containermanager.monitor.ContainersMonitorImpl");
         }
 
         @Override
-        protected ElementMatcher<? super MethodDescription> methodMatcher() {
+        public ElementMatcher<? super MethodDescription> methodMatcher() {
             return named("isProcessTreeOverLimit").and(takesArguments(String.class, long.class, long.class, long.class));
         }
 
         @Override
-        protected Implementation newImplementation() {
+        public Implementation newImplementation() {
             return to(MemorySizeTracer.class).andThen(SuperMethodCall.INSTANCE);
         }
 

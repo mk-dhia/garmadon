@@ -438,6 +438,10 @@
           "type": "long",
           "index": false
         },
+        "original_tracking_url": {
+          "type": "text",
+          "norms": false
+        },
         "os_physicalfree": {
           "type": "integer",
           "index": false
@@ -503,6 +507,12 @@
         "process_written": {
           "type": "long",
           "index": false
+        },
+        "queue": {
+          "type": "keyword",
+          "norms": false,
+          "index_options": "freqs",
+          "eager_global_ordinals": true
         },
         "reads": {
           "type": "long",
@@ -700,6 +710,10 @@
         },
         "timestamp": {
           "type": "date"
+        },
+        "tracking_url": {
+          "type": "text",
+          "norms": false
         },
         "type": {
           "type": "keyword",

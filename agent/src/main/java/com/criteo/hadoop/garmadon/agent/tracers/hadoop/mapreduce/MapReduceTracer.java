@@ -73,17 +73,17 @@ public class MapReduceTracer {
     public static class InputFormatTracer extends MethodTracer {
 
         @Override
-        protected ElementMatcher<? super TypeDescription> typeMatcher() {
+        public ElementMatcher<? super TypeDescription> typeMatcher() {
             return isSubTypeOf(Types.MAPREDUCE_INPUT_FORMAT.getTypeDescription());
         }
 
         @Override
-        protected ElementMatcher<? super MethodDescription> methodMatcher() {
+        public ElementMatcher<? super MethodDescription> methodMatcher() {
             return named("getSplits").or(named("createRecordReader"));
         }
 
         @Override
-        protected Implementation newImplementation() {
+        public Implementation newImplementation() {
             return to(InputFormatTracer.class).andThen(SuperMethodCall.INSTANCE);
         }
 
@@ -117,17 +117,17 @@ public class MapReduceTracer {
     public static class OutputFormatTracer extends MethodTracer {
 
         @Override
-        protected ElementMatcher<? super TypeDescription> typeMatcher() {
+        public ElementMatcher<? super TypeDescription> typeMatcher() {
             return isSubTypeOf(Types.MAPREDUCE_OUTPUT_FORMAT.getTypeDescription());
         }
 
         @Override
-        protected ElementMatcher<? super MethodDescription> methodMatcher() {
+        public ElementMatcher<? super MethodDescription> methodMatcher() {
             return named("getRecordWriter");
         }
 
         @Override
-        protected Implementation newImplementation() {
+        public Implementation newImplementation() {
             return to(OutputFormatTracer.class).andThen(SuperMethodCall.INSTANCE);
         }
 
@@ -148,17 +148,17 @@ public class MapReduceTracer {
     public static class DeprecatedInputFormatTracer extends MethodTracer {
 
         @Override
-        protected ElementMatcher<? super TypeDescription> typeMatcher() {
+        public ElementMatcher<? super TypeDescription> typeMatcher() {
             return isSubTypeOf(Types.MAPRED_INPUT_FORMAT.getTypeDescription());
         }
 
         @Override
-        protected ElementMatcher<? super MethodDescription> methodMatcher() {
+        public ElementMatcher<? super MethodDescription> methodMatcher() {
             return named("getRecordReader");
         }
 
         @Override
-        protected Implementation newImplementation() {
+        public Implementation newImplementation() {
             return to(DeprecatedInputFormatTracer.class).andThen(SuperMethodCall.INSTANCE);
         }
 
@@ -179,17 +179,17 @@ public class MapReduceTracer {
     public static class DeprecatedOutputFormatTracer extends MethodTracer {
 
         @Override
-        protected ElementMatcher<? super TypeDescription> typeMatcher() {
+        public ElementMatcher<? super TypeDescription> typeMatcher() {
             return isSubTypeOf(Types.MAPRED_OUTPUT_FORMAT.getTypeDescription());
         }
 
         @Override
-        protected ElementMatcher<? super MethodDescription> methodMatcher() {
+        public ElementMatcher<? super MethodDescription> methodMatcher() {
             return named("getRecordWriter");
         }
 
         @Override
-        protected Implementation newImplementation() {
+        public Implementation newImplementation() {
             return to(DeprecatedOutputFormatTracer.class).andThen(SuperMethodCall.INSTANCE);
         }
 

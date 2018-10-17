@@ -44,17 +44,17 @@ public class FileSystemTracer {
     public static class DeleteTracer extends MethodTracer {
 
         @Override
-        protected ElementMatcher<? super TypeDescription> typeMatcher() {
+        public ElementMatcher<? super TypeDescription> typeMatcher() {
             return nameStartsWith("org.apache.hadoop.hdfs.DistributedFileSystem");
         }
 
         @Override
-        protected ElementMatcher<? super MethodDescription> methodMatcher() {
+        public ElementMatcher<? super MethodDescription> methodMatcher() {
             return named("delete").and(takesArguments(Path.class, boolean.class));
         }
 
         @Override
-        protected Implementation newImplementation() {
+        public Implementation newImplementation() {
             return to(DeleteTracer.class).andThen(SuperMethodCall.INSTANCE);
         }
 
@@ -76,17 +76,17 @@ public class FileSystemTracer {
     public static class ReadTracer extends MethodTracer {
 
         @Override
-        protected ElementMatcher<? super TypeDescription> typeMatcher() {
+        public ElementMatcher<? super TypeDescription> typeMatcher() {
             return nameStartsWith("org.apache.hadoop.hdfs.DistributedFileSystem");
         }
 
         @Override
-        protected ElementMatcher<? super MethodDescription> methodMatcher() {
+        public ElementMatcher<? super MethodDescription> methodMatcher() {
             return named("open").and(takesArguments(Path.class, int.class));
         }
 
         @Override
-        protected Implementation newImplementation() {
+        public Implementation newImplementation() {
             return to(ReadTracer.class).andThen(SuperMethodCall.INSTANCE);
         }
 
@@ -107,17 +107,17 @@ public class FileSystemTracer {
     public static class RenameTracer extends MethodTracer {
 
         @Override
-        protected ElementMatcher<? super TypeDescription> typeMatcher() {
+        public ElementMatcher<? super TypeDescription> typeMatcher() {
             return nameStartsWith("org.apache.hadoop.hdfs.DistributedFileSystem");
         }
 
         @Override
-        protected ElementMatcher<? super MethodDescription> methodMatcher() {
+        public ElementMatcher<? super MethodDescription> methodMatcher() {
             return named("rename");
         }
 
         @Override
-        protected Implementation newImplementation() {
+        public Implementation newImplementation() {
             return to(RenameTracer.class).andThen(SuperMethodCall.INSTANCE);
         }
 
@@ -140,12 +140,12 @@ public class FileSystemTracer {
     public static class WriteTracer extends MethodTracer {
 
         @Override
-        protected ElementMatcher<? super TypeDescription> typeMatcher() {
+        public ElementMatcher<? super TypeDescription> typeMatcher() {
             return nameStartsWith("org.apache.hadoop.hdfs.DistributedFileSystem");
         }
 
         @Override
-        protected ElementMatcher<? super MethodDescription> methodMatcher() {
+        public ElementMatcher<? super MethodDescription> methodMatcher() {
             return named("create").and(
                     takesArguments(
                             Path.class,
@@ -159,7 +159,7 @@ public class FileSystemTracer {
         }
 
         @Override
-        protected Implementation newImplementation() {
+        public Implementation newImplementation() {
             return to(WriteTracer.class).andThen(SuperMethodCall.INSTANCE);
         }
 
@@ -178,12 +178,12 @@ public class FileSystemTracer {
     public static class AppendTracer extends MethodTracer {
 
         @Override
-        protected ElementMatcher<? super TypeDescription> typeMatcher() {
+        public ElementMatcher<? super TypeDescription> typeMatcher() {
             return nameStartsWith("org.apache.hadoop.hdfs.DistributedFileSystem");
         }
 
         @Override
-        protected ElementMatcher<? super MethodDescription> methodMatcher() {
+        public ElementMatcher<? super MethodDescription> methodMatcher() {
             return named("append").and(
                     takesArguments(
                             Path.class,
@@ -194,7 +194,7 @@ public class FileSystemTracer {
         }
 
         @Override
-        protected Implementation newImplementation() {
+        public Implementation newImplementation() {
             return to(AppendTracer.class).andThen(SuperMethodCall.INSTANCE);
         }
 

@@ -1,5 +1,6 @@
-package com.criteo.hadoop.garmadon.agent.tracers;
+package com.criteo.hadoop.garmadon.agent.tracers.hadoop.hdfs;
 
+import com.criteo.hadoop.garmadon.agent.tracers.MethodTracer;
 import com.criteo.hadoop.garmadon.event.proto.DataAccessEventProtos;
 import com.criteo.hadoop.garmadon.schema.enums.FsAction;
 import net.bytebuddy.description.method.MethodDescription;
@@ -43,7 +44,7 @@ public class FileSystemTracer {
     public static class DeleteTracer extends MethodTracer {
 
         @Override
-        public ElementMatcher<? super TypeDescription> typeMatcher() {
+        protected ElementMatcher<? super TypeDescription> typeMatcher() {
             return nameStartsWith("org.apache.hadoop.hdfs.DistributedFileSystem");
         }
 
@@ -75,7 +76,7 @@ public class FileSystemTracer {
     public static class ReadTracer extends MethodTracer {
 
         @Override
-        ElementMatcher<? super TypeDescription> typeMatcher() {
+        protected ElementMatcher<? super TypeDescription> typeMatcher() {
             return nameStartsWith("org.apache.hadoop.hdfs.DistributedFileSystem");
         }
 
@@ -106,17 +107,17 @@ public class FileSystemTracer {
     public static class RenameTracer extends MethodTracer {
 
         @Override
-        ElementMatcher<? super TypeDescription> typeMatcher() {
+        protected ElementMatcher<? super TypeDescription> typeMatcher() {
             return nameStartsWith("org.apache.hadoop.hdfs.DistributedFileSystem");
         }
 
         @Override
-        ElementMatcher<? super MethodDescription> methodMatcher() {
+        protected ElementMatcher<? super MethodDescription> methodMatcher() {
             return named("rename");
         }
 
         @Override
-        Implementation newImplementation() {
+        protected Implementation newImplementation() {
             return to(RenameTracer.class).andThen(SuperMethodCall.INSTANCE);
         }
 
@@ -139,12 +140,12 @@ public class FileSystemTracer {
     public static class WriteTracer extends MethodTracer {
 
         @Override
-        ElementMatcher<? super TypeDescription> typeMatcher() {
+        protected ElementMatcher<? super TypeDescription> typeMatcher() {
             return nameStartsWith("org.apache.hadoop.hdfs.DistributedFileSystem");
         }
 
         @Override
-        ElementMatcher<? super MethodDescription> methodMatcher() {
+        protected ElementMatcher<? super MethodDescription> methodMatcher() {
             return named("create").and(
                     takesArguments(
                             Path.class,
@@ -158,7 +159,7 @@ public class FileSystemTracer {
         }
 
         @Override
-        Implementation newImplementation() {
+        protected Implementation newImplementation() {
             return to(WriteTracer.class).andThen(SuperMethodCall.INSTANCE);
         }
 
@@ -177,12 +178,12 @@ public class FileSystemTracer {
     public static class AppendTracer extends MethodTracer {
 
         @Override
-        ElementMatcher<? super TypeDescription> typeMatcher() {
+        protected ElementMatcher<? super TypeDescription> typeMatcher() {
             return nameStartsWith("org.apache.hadoop.hdfs.DistributedFileSystem");
         }
 
         @Override
-        ElementMatcher<? super MethodDescription> methodMatcher() {
+        protected ElementMatcher<? super MethodDescription> methodMatcher() {
             return named("append").and(
                     takesArguments(
                             Path.class,
@@ -193,7 +194,7 @@ public class FileSystemTracer {
         }
 
         @Override
-        Implementation newImplementation() {
+        protected Implementation newImplementation() {
             return to(AppendTracer.class).andThen(SuperMethodCall.INSTANCE);
         }
 

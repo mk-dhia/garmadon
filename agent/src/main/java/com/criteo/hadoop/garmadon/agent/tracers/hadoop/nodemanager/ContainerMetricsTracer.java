@@ -1,7 +1,8 @@
-package com.criteo.hadoop.garmadon.agent.tracers;
+package com.criteo.hadoop.garmadon.agent.tracers.hadoop.nodemanager;
 
 import com.criteo.hadoop.garmadon.TriConsumer;
 import com.criteo.hadoop.garmadon.agent.AsyncEventProcessor;
+import com.criteo.hadoop.garmadon.agent.tracers.MethodTracer;
 import com.criteo.hadoop.garmadon.event.proto.ContainerEventProtos;
 import com.criteo.hadoop.garmadon.schema.enums.ContainerType;
 import com.criteo.hadoop.garmadon.schema.events.Header;
@@ -69,17 +70,17 @@ public class ContainerMetricsTracer {
 
 
         @Override
-        ElementMatcher<? super TypeDescription> typeMatcher() {
+        protected ElementMatcher<? super TypeDescription> typeMatcher() {
             return nameStartsWith("org.apache.hadoop.yarn.server.nodemanager.containermanager.monitor.ContainerMetrics");
         }
 
         @Override
-        ElementMatcher<? super MethodDescription> methodMatcher() {
+        protected ElementMatcher<? super MethodDescription> methodMatcher() {
             return named("recordCpuUsage").and(takesArguments(int.class, int.class));
         }
 
         @Override
-        Implementation newImplementation() {
+        protected Implementation newImplementation() {
             return to(VcoreUsageTracer.class).andThen(SuperMethodCall.INSTANCE);
         }
 

@@ -1,5 +1,6 @@
 package com.criteo.hadoop.garmadon.agent.tracers;
 
+import com.criteo.hadoop.garmadon.agent.tracers.hadoop.nodemanager.ContainerResourceMonitoringTracer;
 import com.criteo.hadoop.garmadon.agent.utils.AgentAttachmentRule;
 import com.criteo.hadoop.garmadon.agent.utils.ClassFileExtraction;
 import com.criteo.hadoop.garmadon.schema.events.Header;

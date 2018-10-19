@@ -63,11 +63,11 @@ abstract class Tracer {
                 );
     }
 
-    void installOn(Instrumentation instrumentation) {
+    public void installOn(Instrumentation instrumentation) {
         this.agentBuilder.installOn(instrumentation);
     }
 
-    ResettableClassFileTransformer installOnByteBuddyAgent() {
+    public ResettableClassFileTransformer installOnByteBuddyAgent() {
         return this.agentBuilder.installOnByteBuddyAgent();
     }
 

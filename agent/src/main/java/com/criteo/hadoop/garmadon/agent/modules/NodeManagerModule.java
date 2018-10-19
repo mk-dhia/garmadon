@@ -1,11 +1,9 @@
 package com.criteo.hadoop.garmadon.agent.modules;
 
 import com.criteo.hadoop.garmadon.agent.AsyncEventProcessor;
-import com.criteo.hadoop.garmadon.agent.headers.ContainerHeader;
 import com.criteo.hadoop.garmadon.agent.headers.NodemanagerHeader;
-import com.criteo.hadoop.garmadon.agent.tracers.ContainerMetricsTracer;
-import com.criteo.hadoop.garmadon.agent.tracers.ContainerResourceMonitoringTracer;
-import org.apache.hadoop.yarn.conf.YarnConfiguration;
+import com.criteo.hadoop.garmadon.agent.tracers.hadoop.nodemanager.ContainerMetricsTracer;
+import com.criteo.hadoop.garmadon.agent.tracers.hadoop.nodemanager.ContainerResourceMonitoringTracer;
 
 import java.lang.instrument.Instrumentation;
 

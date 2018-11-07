@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -103,7 +104,11 @@ public class GarmadonReader {
                             if (filter.accepts(typeMarker)) {
 
                                 if (header == null) {
-                                    header = DataAccessEventProtos.Header.parseFrom(new ByteArrayInputStream(raw, HEADER_OFFSET, headerSize));
+                                    try {
+                                        header = DataAccessEventProtos.Header.parseFrom(new ByteArrayInputStream(raw, HEADER_OFFSET, headerSize));
+                                    } catch (IOException e) {
+                                        LOGGER.error("Cannot deserialize header for kafka record " + record + " with type " + typeMarker);
+                                    }
                                 }
 
                                 if (filter.accepts(typeMarker, header)) {
@@ -117,11 +122,13 @@ public class GarmadonReader {
                                         }
                                     }
 
-                                    CommittableOffset<String, byte[]> committableOffset = new CommittableOffset<>(consumer, record.topic(), record.partition(), record.offset());
-                                    GarmadonMessage msg = new GarmadonMessage(typeMarker, header, body, committableOffset);
+                                    if (header != null && body != null) {
+                                        CommittableOffset<String, byte[]> committableOffset = new CommittableOffset<>(consumer, record.topic(), record.partition(), record.offset());
+                                        GarmadonMessage msg = new GarmadonMessage(typeMarker, header, body, committableOffset);
 
-                                    beforeInterceptHandlers.forEach(c -> c.handle(msg));
-                                    listeners.get(filter).handle(msg);
+                                        beforeInterceptHandlers.forEach(c -> c.handle(msg));
+                                        listeners.get(filter).handle(msg);
+                                    }
                                 }
                             }
                         }
